@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<InputProps> = ({ name, Icon, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null); //acessa a DOM do input
-  const {fieldName, registerField} = useField(name);
+  const {fieldName, defaultValue, error, registerField} = useField(name);
 
   const [ isFocused, setIsFocused ] = useState(false);
   const [isFilled, setIsFielled] = useState(false);
@@ -40,6 +40,8 @@ const Input: React.FC<InputProps> = ({ name, Icon, ...rest }) => {
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         {...rest}/>
+
+        {error}
     </Container>
   )
 }
