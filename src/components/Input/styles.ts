@@ -1,8 +1,10 @@
 import styled, { css } from 'styled-components';
+import Toltip from '../Toltip';
 
 interface ContainerProps {
   isFocused: boolean;
   isFilled: boolean;
+  isError: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -14,6 +16,11 @@ export const Container = styled.div<ContainerProps>`
     width: 100%;
     display: flex;
     align-items: center;
+
+    ${props => props.isError && css`
+    border-color: #c53030;
+
+    `};
 
     ${props => props.isFocused && css`
     color: #ff9000;
@@ -45,3 +52,13 @@ export const Container = styled.div<ContainerProps>`
       margin-right: 16px;
     }
 `;
+
+export const Error = styled(Toltip)`
+  margin-left: 16px;
+  svg {
+    margin: 0;
+  }
+
+`;
+
+
