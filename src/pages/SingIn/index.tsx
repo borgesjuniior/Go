@@ -4,13 +4,12 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import getValidationErrors from '../../utils/getValidationErros';
 import Logo from '../../assets/logo.svg'
 import { Container, Content, Background } from './styles';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import { useContext } from 'react';
 
 interface SingInFormData {
   email: string;
@@ -20,7 +19,8 @@ interface SingInFormData {
 
 const SingIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { sinInM, user } = useContext(AuthContext);
+
+  const { sinInM, user } = useAuth();
 
   console.log(user);
 

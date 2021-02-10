@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useCallback, useState, useContext } from 'react';
 import api from '../services/api';
 
 interface SignInCredentials {
@@ -51,11 +51,23 @@ const AuthProvider: React.FC = ({children}) => {
 
   }, []);
 
+
+
   return (
     <AuthContext.Provider value={{user: data.user, sinInM}}>
       {children}
     </AuthContext.Provider>
   )
+};
+
+function  useAuth() {
+  const context = useContext(AuthContext);
+
+  if(!context) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
+
+  return context;
 }
 
-export { AuthContext, AuthProvider };
+export { AuthProvider, useAuth};
