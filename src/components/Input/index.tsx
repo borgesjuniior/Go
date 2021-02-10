@@ -3,7 +3,6 @@ import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle } from 'react-icons/fi';
 import { useField } from '@unform/core';
 import { Container, Error } from './styles';
-import Toltip from '../../components/Toltip';
 
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -13,7 +12,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<InputProps> = ({ name, Icon, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null); //acessa a DOM do input
-  const {fieldName, defaultValue, error, registerField} = useField(name);
+  const {fieldName, error, registerField} = useField(name);
 
   const [ isFocused, setIsFocused ] = useState(false);
   const [isFilled, setIsFielled] = useState(false);
