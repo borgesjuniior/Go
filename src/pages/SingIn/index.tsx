@@ -4,17 +4,25 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-
+import { AuthContext } from '../../context/AuthContext';
 import getValidationErrors from '../../utils/getValidationErros';
 import Logo from '../../assets/logo.svg'
 import { Container, Content, Background } from './styles';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import { useContext } from 'react';
+
+interface SingInFormData {
+  email: string;
+  password: string;
+}
 
 
 const SingIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const handleSubmit = useCallback(async (data: {}) => {
+  const { sinInM } = useContext(AuthContext)
+
+  const handleSubmit = useCallback(async (data: SingInFormData) => {
     try {
 
       const schema = Yup.object().shape({
@@ -26,12 +34,18 @@ const SingIn: React.FC = () => {
         abortEarly: false,
       });
 
+      sinInM({
+        email: data.email, //Pega os dados do form e passa pra dentro do contexto
+        password: data.password,
+      })
+
     } catch (err) {
       const errors = getValidationErrors(err)
       formRef.current?.setErrors(errors); //seta is erros para o Input
 
     }
-  }, [])
+
+  }, [sinInM])
 
   return (
     <Container>
