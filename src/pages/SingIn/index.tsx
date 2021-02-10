@@ -4,7 +4,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/AuthContext';
 import getValidationErrors from '../../utils/getValidationErros';
 import Logo from '../../assets/logo.svg'
 import { Container, Content, Background } from './styles';
@@ -20,7 +20,7 @@ interface SingInFormData {
 const SingIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { sinInM, user } = useAuth();
+  const { signIn, user } = useAuth();
 
   console.log(user);
 
@@ -36,7 +36,7 @@ const SingIn: React.FC = () => {
         abortEarly: false,
       });
 
-      sinInM({
+      signIn({
         email: data.email, //Pega os dados do form e passa pra dentro do contexto
         password: data.password,
       })
@@ -47,7 +47,7 @@ const SingIn: React.FC = () => {
 
     }
 
-  }, [sinInM])
+  }, [signIn])
 
   return (
     <Container>

@@ -12,7 +12,8 @@ interface AuthState {
 }
 interface AuthContextData {
   user: object;
-  sinInM(credentials: SignInCredentials): Promise<void>;
+  signIn(credentials: SignInCredentials): Promise<void>;
+  singOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -33,15 +34,14 @@ const AuthProvider: React.FC = ({children}) => {
     return {} as AuthState;
   })
 
-  const sinInM = useCallback(async ({email, password}) => {
+  const signIn = useCallback(async ({email, password}) => {
 
     const response = await api.post('sessions', { //Acessa a rota http://localhost/sessions passando os valores
       email,
       password
-    })
+    });
 
     //console.log(response.data);
-
     const { token, user } = response.data
 
     localStorage.setItem('@GoBarber:token', token);
@@ -51,10 +51,18 @@ const AuthProvider: React.FC = ({children}) => {
 
   }, []);
 
+  const singOut = useCallback(() => {
+    localStorage.removeItem('@GoBarber:token');
+    localStorage.removeItem('@GoBarber:user');
+
+    setData({} as AuthState);
+
+  }, []);
+
 
 
   return (
-    <AuthContext.Provider value={{user: data.user, sinInM}}>
+    <AuthContext.Provider value={{user: data.user, signIn, singOut }}>
       {children}
     </AuthContext.Provider>
   )
@@ -70,4 +78,4 @@ function  useAuth() {
   return context;
 }
 
-export { AuthProvider, useAuth};
+export { AuthProvider, useAuth };
