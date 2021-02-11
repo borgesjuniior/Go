@@ -50,7 +50,11 @@ const SingIn: React.FC = () => {
       }
 
 
-      addToast() //Dispara um toast
+      addToast({
+        type: 'error',
+        title: 'Ocorreu um erro na autenticação',
+        description: 'Ocorreu um erro ao fazer login, cheque suas credencias',
+      }) //Dispara um toast
     }
 
   }, [signIn, addToast])
