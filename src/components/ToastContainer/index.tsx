@@ -4,6 +4,7 @@ import { FiAlertCircle, FiXCircle } from 'react-icons/fi';
 
 import { Container, Toast } from './styles';
 
+
 const ToastContainer: React.FC = () => {
 
   return (

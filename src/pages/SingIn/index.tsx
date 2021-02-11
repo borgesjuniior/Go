@@ -3,7 +3,7 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-
+import { useToast } from '../../hooks/ToastsContext';
 import { useAuth } from '../../hooks/AuthContext';
 import getValidationErrors from '../../utils/getValidationErros';
 import Logo from '../../assets/logo.svg'
@@ -21,6 +21,7 @@ const SingIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { signIn, user } = useAuth();
+  const { addToast } = useToast();
 
   console.log(user);
 
@@ -36,7 +37,7 @@ const SingIn: React.FC = () => {
         abortEarly: false,
       });
 
-      signIn({
+      await signIn({
         email: data.email, //Pega os dados do form e passa pra dentro do contexto
         password: data.password,
       })
@@ -48,10 +49,11 @@ const SingIn: React.FC = () => {
         formRef.current?.setErrors(errors); //seta os erros para o Input
       }
 
-      //Dispara um toast
+
+      addToast() //Dispara um toast
     }
 
-  }, [signIn])
+  }, [signIn, addToast])
 
   return (
     <Container>
