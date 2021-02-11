@@ -42,9 +42,13 @@ const SingIn: React.FC = () => {
       })
 
     } catch (err) {
-      const errors = getValidationErrors(err)
-      formRef.current?.setErrors(errors); //seta is erros para o Input
 
+      if(err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err)
+        formRef.current?.setErrors(errors); //seta os erros para o Input
+      }
+
+      //Dispara um toast
     }
 
   }, [signIn])
