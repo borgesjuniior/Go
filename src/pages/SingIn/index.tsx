@@ -3,6 +3,8 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
+
 import { useToast } from '../../hooks/ToastsContext';
 import { useAuth } from '../../hooks/AuthContext';
 import getValidationErrors from '../../utils/getValidationErros';
@@ -10,6 +12,7 @@ import Logo from '../../assets/logo.svg'
 import { Container, Content, Background } from './styles';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+
 
 interface SingInFormData {
   email: string;
@@ -74,9 +77,9 @@ const SingIn: React.FC = () => {
           <a href="adf">Esqueci minha senha</a>
         </Form>
 
-        <a href="criar">
+        <Link to="/signup">
           <FiLogIn />
-          Criar conta</a>
+          Criar conta</Link>
       </Content>
       <Background />
     </Container>
