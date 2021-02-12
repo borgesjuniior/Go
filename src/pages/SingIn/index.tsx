@@ -3,7 +3,7 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { useToast } from '../../hooks/ToastsContext';
 import { useAuth } from '../../hooks/AuthContext';
@@ -26,6 +26,8 @@ const SingIn: React.FC = () => {
   const { signIn, user } = useAuth();
   const { addToast } = useToast();
 
+  const history = useHistory()
+
   console.log(user);
 
   const handleSubmit = useCallback(async (data: SingInFormData) => {
@@ -45,6 +47,8 @@ const SingIn: React.FC = () => {
         password: data.password,
       })
 
+      history.push('/dashboard') //Redireciona o usuário para o dashboard
+
     } catch (err) {
 
       if(err instanceof Yup.ValidationError) {
@@ -54,13 +58,13 @@ const SingIn: React.FC = () => {
 
 
       addToast({
-        type: 'info',
+        type: 'error',
         title: 'Ocorreu um erro na autenticação',
-        description: 'Ocorreu um erro ao fazer login, cheque suas credencias',
+        description: 'Ocorreu um erro ao fazer login, cheque suas credencias.',
       }) //Dispara um toast
     }
 
-  }, [signIn, addToast])
+  }, [signIn, addToast, history])
 
   return (
     <Container>

@@ -3,8 +3,10 @@ import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
+import { useToast } from '../../hooks/ToastsContext';
+import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErros';
 import Logo from '../../assets/logo.svg'
 import { Container, Content, Background } from './styles';
@@ -12,9 +14,18 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 
+interface UserData {
+  name: string,
+  email: string,
+  password: string;
+}
+
 const SingIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const handleSubmit = useCallback(async (data: {}) => {
+  const { addToast } = useToast();
+  const history = useHistory();
+
+  const handleSubmit = useCallback(async (data: UserData) => {
     try {
 
       const schema = Yup.object().shape({
@@ -24,15 +35,35 @@ const SingIn: React.FC = () => {
       });
 
       await schema.validate(data, {
-        abortEarly: false,
+        abortEarly: false, //Deixa mostrar todos os campos que não foram válidados
       });
 
+      await api.post('/users', data);
+
+      addToast({
+        type: 'success',
+        title: 'Cadastro realizado com sucesso!',
+        description: 'Você já pode fazer seu logon'
+      })
+
+      history.push('/'); //Redireciona o usuário para a página de Logon
     } catch (err) {
-      const errors = getValidationErrors(err)
-      formRef.current?.setErrors(errors); //seta is erros para o Input
+
+      if(err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err)
+        formRef.current?.setErrors(errors); //seta os erros para o Input
+      }
+
+      console.log(err);
+
+      addToast({
+        type: 'error',
+        title: 'Erro no cadastro!',
+        description: 'Ocorreu um erro ao fazer cadastro, tente novamente.',
+      }) //Dispara um toast //seta is erros para o Input
 
     }
-  }, [])
+  }, [history, addToast])
 
   return (
     <Container>
