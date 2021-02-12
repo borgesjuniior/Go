@@ -1,8 +1,10 @@
 import React from 'react';
-import { Switch, Route} from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
+import Route from './routes';
 import signIn from '../pages/SingIn';
 import SingUp from '../pages/SingUp';
+import Dashboard from '../pages/Dashboard';
 
 const Routes: React.FC = () => (
   /**
@@ -12,6 +14,7 @@ const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={signIn} />
     <Route path="/signup" component={SingUp} />
+    <Route path="/dashboard" component={Dashboard} isPrivate />
   </Switch>
 )
 

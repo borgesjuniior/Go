@@ -11,11 +11,11 @@ function App() {
   return (
     <BrowserRouter>
 
-    <AppProvider>
-      <Routes />
-    </AppProvider>
+      <AppProvider>
+        <Routes />
+      </AppProvider>
 
-    <GlobalStyle />
+      <GlobalStyle />
 
     </ BrowserRouter>
   );
