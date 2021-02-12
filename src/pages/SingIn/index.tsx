@@ -51,7 +51,7 @@ const SingIn: React.FC = () => {
 
 
       addToast({
-        type: 'error',
+        type: 'info',
         title: 'Ocorreu um erro na autenticação',
         description: 'Ocorreu um erro ao fazer login, cheque suas credencias',
       }) //Dispara um toast
